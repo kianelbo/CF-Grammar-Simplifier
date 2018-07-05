@@ -1,0 +1,9 @@
+V: S, A, B, C, D
+T: a, b, c
+S: S
+P: 
+S -> aA|aBB
+A -> aaA|$
+B -> bB|bbC
+C -> Bb
+D -> Cc
