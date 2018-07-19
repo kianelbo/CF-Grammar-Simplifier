@@ -23,12 +23,10 @@ public class Parser {
             if (initialSetup) {
 
                 if (currentLine.startsWith("V:")) parseStates((currentLine.split(":")[1]).trim());
-
                 else if (currentLine.startsWith("T:")) parseTerminals(currentLine.split(":")[1].trim());
-
                 else if (currentLine.startsWith("S:")) parseStartState(currentLine.split(":")[1].trim());
-
                 else if (currentLine.startsWith("P:")) initialSetup = false;
+
             } else parseRules(currentLine.trim());
             currentLine = reader.readLine();
         }
@@ -37,9 +35,9 @@ public class Parser {
         return parsedGrammar;
     }
 
-    public void parseStates(String newStates) {
+    private void parseStates(String newStates) {
         String[] splitStates = newStates.split(",");
-        List<State> statesToAdd = new ArrayList<>();
+        ArrayList<State> statesToAdd = new ArrayList<>();
         for (String state : splitStates) {
             state = state.trim();
             State newState = new State(state.charAt(0));
@@ -48,9 +46,9 @@ public class Parser {
         parsedGrammar.setStates(statesToAdd);
     }
 
-    public void parseTerminals(String terminals) {
+    private void parseTerminals(String terminals) {
         String[] splitTerminals = terminals.split(",");
-        List<Character> terminalsToAdd = new ArrayList<>();
+        ArrayList<Character> terminalsToAdd = new ArrayList<>();
         for (String terminal : splitTerminals) {
             terminal = terminal.trim();
             terminalsToAdd.add(terminal.charAt(0));
@@ -58,13 +56,13 @@ public class Parser {
         parsedGrammar.setTerminals(terminalsToAdd);
     }
 
-    public void parseStartState(String startState) {
+    private void parseStartState(String startState) {
         parsedGrammar.setStartState(parsedGrammar.getStateWithName(startState.trim().charAt(0)));
     }
 
-    public void parseRules(String rulesToParse) {
+    private void parseRules(String rulesToParse) {
         State stateToEdit = parsedGrammar.getStateWithName(rulesToParse.charAt(0));
-        List<String> derivationsToAdd = new ArrayList<>();
+        ArrayList<String> derivationsToAdd = new ArrayList<>();
         String[] unparsedDerivations = rulesToParse.split("->")[1].trim().split("\\|");
 
         for (String derivation : unparsedDerivations) {

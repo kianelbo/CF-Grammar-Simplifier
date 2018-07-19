@@ -2,15 +2,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Grammar {
-    private List<State> states;
-    private List<Character> terminals;
+    private ArrayList<State> states;
+    private ArrayList<Character> terminals;
     private State startState;
 
-    public List<State> getStates() {
+    public ArrayList<State> getStates() {
         return states;
     }
 
-    public void setStates(List<State> states) {
+    public void setStates(ArrayList<State> states) {
         this.states = states;
     }
 
@@ -18,7 +18,7 @@ public class Grammar {
         return terminals;
     }
 
-    public void setTerminals(List<Character> terminals) {
+    public void setTerminals(ArrayList<Character> terminals) {
         this.terminals = terminals;
     }
 
@@ -37,9 +37,10 @@ public class Grammar {
     }
 
     public void removeEmptyStates() {
-        if (!states.isEmpty()) for (int indexOfState = 0; indexOfState < states.size(); indexOfState++) {
-            if (states.get(indexOfState).getDerivations().isEmpty()) states.remove(indexOfState);
-        }
+        if (!states.isEmpty())
+            for (int indexOfState = 0; indexOfState < states.size(); indexOfState++) {
+                if (states.get(indexOfState).getDerivations().isEmpty()) states.remove(indexOfState);
+            }
         else System.out.println("There are no states in this grammar, so no empty ones were removed.");
     }
 
@@ -60,7 +61,7 @@ public class Grammar {
         objectString += "\n" + "Start State: " + startState.getNonTerminal() + "\n" + "Rules: " + "\n";
         for (State state : states) {
             objectString += state.getNonTerminal() + ": ";
-            ArrayList<String> derivations = (ArrayList<String>) state.getDerivations();
+            ArrayList<String> derivations = state.getDerivations();
             for (String derivation : derivations) {
                 objectString += derivation;
 

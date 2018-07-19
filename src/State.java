@@ -1,9 +1,9 @@
-import java.util.List;
+import java.util.ArrayList;
 
 public class State {
 	
 	private char nonTerminal;
-	private List<String> derivations;
+	private ArrayList<String> derivations;
 	
 	public State(char nonTerminal) {
 		this.nonTerminal = nonTerminal;
@@ -13,11 +13,11 @@ public class State {
 		return nonTerminal;
 	}
 
-	public List<String> getDerivations() {
+	public ArrayList<String> getDerivations() {
 		return derivations;
 	}
 
-	public void setDerivations(List<String> derivations) {
+	public void setDerivations(ArrayList<String> derivations) {
 		this.derivations = derivations;
 	}
 	

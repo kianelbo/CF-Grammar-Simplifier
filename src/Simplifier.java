@@ -6,15 +6,15 @@ public class Simplifier {
 
 
     public Grammar simplify(Grammar cfg) {
-        removeLambada(cfg);
+        removeLambda(cfg);
         removeUnitProduction(cfg);
         removeUselessStates(cfg);
         return cfg;
     }
 
-    private void removeLambada(Grammar cfg) {
+    private void removeLambda(Grammar cfg) {
         List<State> nullables = new ArrayList<>();
-        ArrayList<State> statesInGrammar = (ArrayList<State>) cfg.getStates();
+        ArrayList<State> statesInGrammar = cfg.getStates();
 
         boolean isNullable;
 
@@ -27,7 +27,7 @@ public class Simplifier {
 
         boolean newNullableAdded;
 
-        ArrayList<State> nonNullableStates = (ArrayList<State>) ((ArrayList<State>) cfg.getStates()).clone();
+        ArrayList<State> nonNullableStates = (ArrayList<State>) cfg.getStates().clone();
         nonNullableStates.removeAll(nullables);
 
         do {
@@ -54,7 +54,7 @@ public class Simplifier {
 
         ArrayList<String> derivations;
         for (State state : statesInGrammar) {
-            derivations = (ArrayList<String>) state.getDerivations();
+            derivations = state.getDerivations();
             ArrayList<String> derivationsToAdd = new ArrayList<>();
             ArrayList<String> derivationsToRemove = new ArrayList<>();
 
@@ -70,7 +70,6 @@ public class Simplifier {
                             if (c != nullableState.getNonTerminal()) {
                                 newDerivationToAdd[index] = c;
                                 index++;
-
                             }
                         String newDerivation = new String(newDerivationToAdd);
                         derivationsToAdd.add(newDerivation);
@@ -83,12 +82,12 @@ public class Simplifier {
 
     private void removeUnitProduction(Grammar cfg) {
         ArrayList<String> removedUnitProductionsPerState;
-        ArrayList<State> states = (ArrayList<State>) cfg.getStates();
+        ArrayList<State> states = cfg.getStates();
 
         for (State state : states) {
             removedUnitProductionsPerState = new ArrayList<>();
             for (String derivation : state.getDerivations())
-                if (derivation.length() == 1 && Character.isUpperCase(derivation.toCharArray()[0]))
+                if (derivation.length() == 1 && Character.isUpperCase(derivation.charAt(0)))
                     removedUnitProductionsPerState.add(derivation);
             if (removedUnitProductionsPerState.size() > 0) for (String toRemove : removedUnitProductionsPerState) {
                 state.removeDerivation(toRemove);
@@ -157,7 +156,6 @@ public class Simplifier {
 
         for (char productiveState : productive)
             if (Character.isUpperCase(productiveState))
-
                 for (State check : cfg.getStates())
                     if (check.getNonTerminal() == productiveState) newStates.add(check);
 
@@ -183,12 +181,9 @@ public class Simplifier {
             for (String deriv : s.getDerivations()) {
 
                 char[] derived = deriv.toCharArray();
-                for (char i : derived) {
-                    if (Character.isLowerCase(i) && !newTerminals.contains(i)) {
+                for (char i : derived)
+                    if (Character.isLowerCase(i) && !newTerminals.contains(i))
                         newTerminals.add(i);
-
-                    }
-                }
             }
         cfg.setTerminals(newTerminals);
     }
