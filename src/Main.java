@@ -22,5 +22,9 @@ public class Main {
         Grammar simplifiedGrammar = simplifier.simplify(parsedGrammar);
         System.out.println(simplifiedGrammar.toString());
 
+        System.out.println("********The Chomsky Normal Form********");
+        ChomskyConverter converter = new ChomskyConverter();
+        Grammar converted = converter.convertToChomsky(simplifiedGrammar);
+        System.out.println(converted.toString());
     }
 }
